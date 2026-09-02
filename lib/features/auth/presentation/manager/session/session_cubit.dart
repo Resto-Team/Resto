@@ -16,7 +16,7 @@ class SessionCubit extends Cubit<SessionState> {
     emit(SessionLoading());
     try {
       final user = await authRepo.getMe();
-      emit(SessionLoaded(user.name, user.phone));
+      emit(SessionLoaded(user.name, user.phone,user.address));
     } catch (e) {
       emit(SessionError(e.toString()));
     }

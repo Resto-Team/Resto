@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:resto/core/network/api_error.dart';
 import 'package:resto/features/cart/domain/entities/cart_entity.dart';
 import 'package:resto/features/cart/domain/repositories/cart_repo.dart';
+import 'package:resto/features/order_history/domain/entities/order_entity.dart';
 
 part 'cart_state.dart';
 
@@ -83,6 +84,26 @@ class CartCubit extends Cubit<CartState> {
       emit(ClearCartSuccessState(clearedCart));
     } catch (e) {
       emit(ClearCartErrorState(_getErrorMessage(e)));
+    }
+  }
+
+  // createOrder
+  Future<void> createOrder({
+    required String deliveryAddress,
+    required String phone,
+    required String paymentMethod,
+  }) async {
+    emit(CreateOrderLoadingState());
+    try {
+      final order = await cartRepo.createOrder(
+        deliveryAddress: deliveryAddress,
+        phone: phone,
+        paymentMethod: paymentMethod,
+      );
+      await clearCart();
+      emit(CreateOrderSuccessState(order));
+    } catch (e) {
+      emit(CreateOrderErrorState(_getErrorMessage(e)));
     }
   }
 }

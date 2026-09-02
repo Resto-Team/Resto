@@ -1,8 +1,8 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
-import 'package:resto/core/functions/app_snack_bar.dart';
+import 'package:resto/core/helpers/extensions.dart';
+import 'package:resto/core/routing/routes.dart';
 import 'package:resto/core/theme/app_colors.dart';
 
 class CheckOutBarWidget extends StatelessWidget {
@@ -59,11 +59,12 @@ class CheckOutBarWidget extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              showAnimatedSnackbar(
-                context,
-                message: 'Checkout completed successfully!',
-                type: AnimatedSnackBarType.success,
-              );
+              // showAnimatedSnackbar(
+              //   context,
+              //   message: 'Checkout completed successfully!',
+              //   type: AnimatedSnackBarType.success,
+              // );
+              context.pushNamed(Routes.checkoutView, arguments: totalPrice);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,

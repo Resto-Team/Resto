@@ -6,4 +6,5 @@ class Routes {
   static const String productDetailsView = '/productDetailsView';
   static const String cartView = '/cartView';
   static const String profileView = '/profileView';
+  static const String checkoutView = '/checkoutView';
 }
