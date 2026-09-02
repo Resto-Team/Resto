@@ -3,6 +3,8 @@ import 'package:resto/core/network/api_service.dart';
 import 'package:resto/features/cart/data/models/cart_model.dart';
 import 'package:resto/features/cart/domain/entities/cart_entity.dart';
 import 'package:resto/features/cart/domain/repositories/cart_repo.dart';
+import 'package:resto/features/order_history/data/models/order_model.dart';
+import 'package:resto/features/order_history/domain/entities/order_entity.dart';
 
 class CartRepoImpl implements CartRepo {
   final ApiService apiService;
@@ -61,5 +63,20 @@ class CartRepoImpl implements CartRepo {
     final response = await apiService.delete(ApiEndpoints.clearCart);
 
     return CartModel.fromJson(response);
+  }
+
+  @override
+  Future<OrderEntity> createOrder({
+    required String deliveryAddress,
+    required String phone,
+    required String paymentMethod,
+  }) async {
+    final response = await apiService.post(ApiEndpoints.createOrder, {
+      'deliveryAddress': deliveryAddress,
+      'phone': phone,
+      'paymentMethod': paymentMethod,
+    });
+
+    return OrderModel.fromJson(response);
   }
 }

@@ -64,3 +64,17 @@ final class ClearCartErrorState extends CartState {
   final String error;
   ClearCartErrorState(this.error);
 }
+
+
+final class CreateOrderLoadingState extends CartState {}
+
+final class CreateOrderSuccessState extends CartState {
+  final OrderEntity order;
+  CreateOrderSuccessState(this.order);
+}
+
+final class CreateOrderErrorState extends CartState {
+  final String error;
+  CreateOrderErrorState(this.error);
+}
+

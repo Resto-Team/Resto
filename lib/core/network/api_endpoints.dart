@@ -10,4 +10,5 @@ class ApiEndpoints {
   static const String updateCartItem = 'cart/items';
   static const String removeItemFromCart = 'cart/items';
   static const String clearCart = 'cart';
+  static const String createOrder = 'orders';
 }

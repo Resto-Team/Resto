@@ -10,7 +10,8 @@ final class SessionLoading extends SessionState {}
 final class SessionLoaded extends SessionState {
   final String userName;
   final String? phone;
-  SessionLoaded(this.userName, this.phone);
+  final String? address;
+  SessionLoaded(this.userName, this.phone, this.address);
 }
 
 final class SessionError extends SessionState {

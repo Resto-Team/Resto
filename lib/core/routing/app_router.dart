@@ -5,10 +5,11 @@ import 'package:resto/core/di/di.dart';
 import 'package:resto/core/routing/fade_page_route.dart';
 import 'package:resto/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:resto/features/auth/presentation/manager/register/register_cubit.dart';
+import 'package:resto/features/auth/presentation/manager/session/session_cubit.dart';
 import 'package:resto/features/auth/presentation/views/login_view.dart';
 import 'package:resto/features/auth/presentation/views/register_view.dart';
-import 'package:resto/features/cart/presentation/cart_view.dart';
-import 'package:resto/features/cart/presentation/checkout_view.dart';
+import 'package:resto/features/cart/presentation/views/cart_view.dart';
+import 'package:resto/features/cart/presentation/views/checkout_view.dart';
 import 'package:resto/features/cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:resto/features/home/domain/entities/product_entity.dart';
 import 'package:resto/features/home/presentation/views/home_view.dart';
@@ -67,7 +68,13 @@ class AppRouter {
         final totalPrice = settings.arguments as num;
         return FadeSlidePageRoute(
           settings: settings,
-          builder: (_) => CheckoutScreen(totalPrice: totalPrice),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: getIt<CartCubit>()),
+              BlocProvider.value(value: getIt<SessionCubit>()..loadSession()),
+            ],
+            child: CheckoutScreen(totalPrice: totalPrice),
+          ),
         );
       case Routes.rootView:
         return FadeSlidePageRoute(

@@ -45,11 +45,16 @@ class CustomButton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomText(
-                    text: text,
-                    color: textColor ?? Colors.white,
-                    size: 15,
-                    weight: FontWeight.w600,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: CustomText(
+                        text: text,
+                        color: textColor ?? Colors.white,
+                        size: 15,
+                        weight: FontWeight.w600,
+                      ),
+                    ),
                   ),
 
                   Gap(gap ?? 0),

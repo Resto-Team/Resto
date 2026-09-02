@@ -1,4 +1,5 @@
 import 'package:resto/features/cart/domain/entities/cart_entity.dart';
+import 'package:resto/features/order_history/domain/entities/order_entity.dart';
 
 abstract class CartRepo {
   Future<CartEntity> getMyCart();
@@ -18,4 +19,11 @@ abstract class CartRepo {
   });
 
   Future<CartEntity> clearCart();
+  
+  // Create a new order
+  Future<OrderEntity> createOrder({
+    required String deliveryAddress,
+    required String phone,
+    required String paymentMethod,
+  });
 }

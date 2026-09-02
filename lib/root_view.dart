@@ -7,7 +7,7 @@ import 'package:glass_bottom_navigation/nav_style.dart';
 import 'package:resto/core/di/di.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/features/auth/presentation/manager/session/session_cubit.dart';
-import 'package:resto/features/cart/presentation/cart_view.dart';
+import 'package:resto/features/cart/presentation/views/cart_view.dart';
 import 'package:resto/features/cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:resto/features/home/presentation/views/home_view.dart';
 import 'package:resto/features/order_history/presentation/manager/cubit/order_history_cubit.dart';

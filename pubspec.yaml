@@ -48,6 +48,10 @@ dependencies:
   google_nav_bar: ^5.0.7
   line_icons: ^2.0.3
   flutter_native_splash: ^2.4.8
+  webview_flutter: ^4.14.1
+  webview_flutter_android: ^4.14.1
+  flutter_dotenv: ^6.0.1
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/vectors/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
