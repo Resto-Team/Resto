@@ -17,6 +17,15 @@ class ProfileMenuSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final titleColor =
+        isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted;
+    final cardColor =
+        theme.cardTheme.color ?? (isDark ? AppColors.darkSurface : Colors.white);
+    final dividerColor = theme.dividerTheme.color ??
+        (isDark ? AppColors.darkBorder : AppColors.lightBorder);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,17 +33,19 @@ class ProfileMenuSection extends StatelessWidget {
           text: title,
           size: 13.sp,
           weight: FontWeight.w600,
-          color: AppColors.lightTextMuted,
+          color: titleColor,
           maxLines: 1,
         ),
         Gap(8.h),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: cardColor,
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
+                color: isDark
+                    ? Colors.black.withValues(alpha: 0.3)
+                    : Colors.black.withValues(alpha: 0.04),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -48,7 +59,7 @@ class ProfileMenuSection extends StatelessWidget {
                   Divider(
                     height: 1,
                     indent: 66.w,
-                    color: AppColors.lightBorder,
+                    color: dividerColor,
                   ),
               ],
             ],

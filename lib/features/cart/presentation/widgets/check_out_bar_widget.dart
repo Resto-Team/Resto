@@ -19,17 +19,22 @@ class CheckOutBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 80.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.darkSurface : Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24.r),
           topRight: Radius.circular(24.r),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.4)
+                : Colors.black.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, -4),
           ),
@@ -44,7 +49,12 @@ class CheckOutBarWidget extends StatelessWidget {
             children: [
               Text(
                 'Total ($itemCount items)',
-                style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade600),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: isDark
+                      ? AppColors.darkTextMuted
+                      : Colors.grey.shade600,
+                ),
               ),
               Gap(4.h),
               Text(
@@ -52,7 +62,9 @@ class CheckOutBarWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor,
+                  color: isDark
+                      ? AppColors.primaryLight
+                      : AppColors.primaryColor,
                 ),
               ),
             ],

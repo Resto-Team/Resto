@@ -32,13 +32,18 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Color.alphaBlend(
-          AppColors.primaryColor.withValues(alpha: 0.1),
-          Colors.white,
-        ),
+        backgroundColor: isDark
+            ? theme.scaffoldBackgroundColor
+            : Color.alphaBlend(
+                AppColors.primaryColor.withValues(alpha: 0.1),
+                Colors.white,
+              ),
         body: CustomScrollView(
           clipBehavior: Clip.none,
           slivers: [

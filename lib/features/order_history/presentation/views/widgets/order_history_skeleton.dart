@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/theme/app_colors.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class OrderHistorySkeleton extends StatelessWidget {
@@ -8,12 +9,24 @@ class OrderHistorySkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBg = theme.cardTheme.color ??
+        (isDark ? AppColors.darkSurface : Colors.white);
+    final dividerColor = isDark ? AppColors.darkBorder : Colors.grey.shade300;
+
     return Skeletonizer(
       enabled: true,
+      effect: isDark
+          ? const ShimmerEffect(
+              baseColor: AppColors.darkSurfaceVariant,
+              highlightColor: AppColors.darkBorder,
+            )
+          : null,
       child: Container(
         padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cardBg,
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Column(
@@ -50,7 +63,7 @@ class OrderHistorySkeleton extends StatelessWidget {
               ),
             ),
             Gap(12.h),
-            Container(height: 1, color: Colors.grey.shade300),
+            Container(height: 1, color: dividerColor),
             Gap(12.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

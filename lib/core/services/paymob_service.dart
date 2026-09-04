@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 import 'package:dio/dio.dart';
-import 'package:resto/core/network/paymob_constants.dart';
+import 'package:resto/core/services/paymob_constants.dart';
 
 class PaymobService {
   final Dio _dio = Dio(

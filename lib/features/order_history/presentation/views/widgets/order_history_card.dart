@@ -30,14 +30,31 @@ class OrderHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBg = theme.cardTheme.color ??
+        (isDark ? AppColors.darkSurface : Colors.white);
+    final orderTitleColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final dateColor =
+        isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted;
+    final dividerColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
+    final itemsTextColor =
+        isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final priceColor = _isCancelled
+        ? dateColor
+        : (isDark ? AppColors.primaryLight : AppColors.primaryColor);
+
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBg,
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -53,7 +70,7 @@ class OrderHistoryCard extends StatelessWidget {
                   text: 'Order #${shortOrderId(order.id)}',
                   size: 16.sp,
                   weight: FontWeight.w700,
-                  color: AppColors.primaryColor,
+                  color: orderTitleColor,
                   maxLines: 1,
                 ),
               ),
@@ -67,11 +84,11 @@ class OrderHistoryCard extends StatelessWidget {
                 '${orderItemsQuantity(order.items)} Items',
             size: 12.sp,
             weight: FontWeight.w400,
-            color: AppColors.lightTextMuted,
+            color: dateColor,
             maxLines: 1,
           ),
           Gap(12.h),
-          const Divider(height: 1, color: AppColors.lightBorder),
+          Divider(height: 1, color: dividerColor),
           Gap(12.h),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,12 +97,13 @@ class OrderHistoryCard extends StatelessWidget {
                 width: 48.r,
                 height: 48.r,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withValues(alpha: 0.1),
+                  color: (isDark ? AppColors.primaryLight : AppColors.primaryColor)
+                      .withValues(alpha: isDark ? 0.2 : 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.restaurant_rounded,
-                  color: AppColors.primaryColor,
+                  color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
                   size: 22.r,
                 ),
               ),
@@ -98,7 +116,7 @@ class OrderHistoryCard extends StatelessWidget {
                       text: orderItemsSummary(order.items),
                       size: 13.sp,
                       weight: FontWeight.w500,
-                      color: AppColors.lightTextPrimary,
+                      color: itemsTextColor,
                       maxLines: 2,
                     ),
                     Gap(6.h),
@@ -106,9 +124,7 @@ class OrderHistoryCard extends StatelessWidget {
                       text: '\$${(order.totalPrice ?? 0).toStringAsFixed(2)}',
                       size: 15.sp,
                       weight: FontWeight.w700,
-                      color: _isCancelled
-                          ? AppColors.lightTextMuted
-                          : AppColors.primaryColor,
+                      color: priceColor,
                       maxLines: 1,
                     ).withStrikeThrough(_isCancelled),
                   ],

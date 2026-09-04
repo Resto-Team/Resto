@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/theme/app_colors.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductSkeleton extends StatelessWidget {
@@ -8,9 +9,19 @@ class ProductSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Skeletonizer(
       enabled: true,
+      effect: isDark
+          ? const ShimmerEffect(
+              baseColor: AppColors.darkSurfaceVariant,
+              highlightColor: AppColors.darkBorder,
+            )
+          : null,
       child: Card(
+        color: theme.cardTheme.color,
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(

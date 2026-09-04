@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
-import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/error_retry_view.dart';
 import 'package:resto/features/order_history/domain/entities/order_entity.dart';
 import 'package:resto/features/order_history/presentation/manager/cubit/order_history_cubit.dart';
@@ -50,7 +49,7 @@ class _OrderHistoryBodyState extends State<OrderHistoryViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [

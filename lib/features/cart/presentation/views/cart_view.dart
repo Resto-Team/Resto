@@ -46,14 +46,20 @@ class _CartViewBodyState extends State<CartViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Color.alphaBlend(
-        AppColors.primaryColor.withValues(alpha: 0.05),
-        Colors.white,
-      ),
+      backgroundColor: isDark
+          ? theme.scaffoldBackgroundColor
+          : Color.alphaBlend(
+              AppColors.primaryColor.withValues(alpha: 0.05),
+              Colors.white,
+            ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor:
+            isDark ? AppColors.darkSurface : AppColors.primaryColor,
         elevation: 0,
         centerTitle: true,
         title: Text(
