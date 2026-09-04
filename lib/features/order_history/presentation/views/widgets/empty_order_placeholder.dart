@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 
@@ -20,7 +21,7 @@ class EmptyOrdersPlaceholder extends StatelessWidget {
           ),
           Gap(12.h),
           CustomText(
-            text: 'No orders found',
+            text: context.strings.noOrdersFound,
             size: 15.sp,
             weight: FontWeight.w600,
             color: AppColors.lightTextSecondary,

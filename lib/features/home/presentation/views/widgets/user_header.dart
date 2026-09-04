@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 
@@ -24,7 +25,7 @@ class UserHeader extends StatelessWidget {
               Row(
                 children: [
                   CustomText(
-                    text: 'Hello, ',
+                    text: context.strings.hello,
                     size: 20.sp,
                     weight: FontWeight.w600,
                     color: Colors.grey.shade400,

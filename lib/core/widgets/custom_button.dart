@@ -29,13 +29,17 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final buttonColor =
+        color ?? (isDark ? AppColors.primaryLight : AppColors.primaryColor);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: SizedBox(
         width: width ?? double.infinity,
         height: height ?? 52,
         child: Material(
-          color: color ?? AppColors.primaryColor,
+          color: buttonColor,
           borderRadius: BorderRadius.circular(radius ?? 12),
           child: InkWell(
             onTap: onTap,

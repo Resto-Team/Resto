@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 
@@ -15,7 +16,7 @@ class OrderHistoryHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            text: 'Order History',
+            text: context.strings.orderHistory,
             size: 26.sp,
             weight: FontWeight.w700,
             color: AppColors.primaryColor,
@@ -23,7 +24,7 @@ class OrderHistoryHeader extends StatelessWidget {
           ),
           Gap(6.h),
           CustomText(
-            text: 'Review your past cravings and reorder your favorites.',
+            text: context.strings.orderHistorySubtitle,
             size: 13.sp,
             weight: FontWeight.w400,
             color: AppColors.lightTextSecondary,

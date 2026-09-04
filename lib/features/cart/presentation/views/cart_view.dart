@@ -5,6 +5,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/di/di.dart';
 import 'package:resto/core/functions/app_snack_bar.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/features/cart/domain/entities/cart_entity.dart';
 import 'package:resto/features/cart/presentation/manager/cubit/cart_cubit.dart';
@@ -63,7 +64,7 @@ class _CartViewBodyState extends State<CartViewBody> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'My Cart',
+          context.strings.myCart,
           style: TextStyle(
             color: Colors.white,
             fontSize: 20.sp,
@@ -79,7 +80,7 @@ class _CartViewBodyState extends State<CartViewBody> {
               Icons.delete_outline_rounded,
               color: Colors.white,
             ),
-            tooltip: 'Clear Cart',
+            tooltip: context.strings.clearCart,
           ),
         ],
       ),

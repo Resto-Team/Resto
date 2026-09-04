@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/functions/app_snack_bar.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_button.dart';
 import 'package:resto/features/cart/presentation/manager/cubit/cart_cubit.dart';
@@ -28,15 +29,26 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
   @override
   Widget build(BuildContext context) {
     final product = widget.product;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final barBg = isDark ? AppColors.darkSurface : Colors.white;
+    final primary = isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final qtyBg = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.primaryColor.withValues(alpha: 0.08);
+    final qtyTextColor =
+        isDark ? AppColors.darkTextPrimary : AppColors.primaryColor;
 
     return SafeArea(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: barBg,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.3)
+                  : Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, -4),
             ),
@@ -48,7 +60,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha: 0.08),
+                color: qtyBg,
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Row(
@@ -63,8 +75,8 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                       Icons.remove,
                       size: 18.r,
                       color: _quantity > 1
-                          ? AppColors.primaryColor
-                          : Colors.grey,
+                          ? primary
+                          : (isDark ? AppColors.darkTextMuted : Colors.grey),
                     ),
                     onPressed: _quantity > 1
                         ? () => setState(() => _quantity--)
@@ -77,7 +89,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
+                        color: qtyTextColor,
                       ),
                     ),
                   ),
@@ -90,7 +102,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                     icon: Icon(
                       Icons.add,
                       size: 18.r,
-                      color: AppColors.primaryColor,
+                      color: primary,
                     ),
                     onPressed: () => setState(() => _quantity++),
                   ),
@@ -108,7 +120,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                     showAnimatedSnackbar(
                       context,
                       message:
-                          '${product.name ?? 'Item'} added to cart successfully!',
+                          '${product.name ?? 'Item'} ${context.strings.addedToCartSuccess}',
                       type: AnimatedSnackBarType.success,
                     );
                   } else if (state is AddItemToCartErrorState) {
@@ -123,7 +135,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                   final isLoading = state is AddItemToCartLoadingState;
 
                   return CustomButton(
-                    text: isLoading ? 'Adding...' : 'Add to Cart',
+                    text: isLoading ? context.strings.adding : context.strings.addToCart,
                     widget: isLoading
                         ? const SizedBox(
                             width: 18,
@@ -146,7 +158,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                             } else {
                               showAnimatedSnackbar(
                                 context,
-                                message: 'Product ID is missing',
+                                message: context.strings.productIdMissing,
                                 type: AnimatedSnackBarType.error,
                               );
                             }

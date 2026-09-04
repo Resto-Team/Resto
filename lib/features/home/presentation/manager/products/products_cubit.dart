@@ -18,4 +18,14 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsFailure(errorMessage: e.toString()));
     }
   }
+
+  Future<void> searchProducts(String query) async {
+    emit(ProductsLoading());
+    try {
+      final products = await homeRepo.searchProducts(query);
+      emit(ProductsSuccess(products));
+    } catch (e) {
+      emit(ProductsFailure(errorMessage: e.toString()));
+    }
+  }
 }

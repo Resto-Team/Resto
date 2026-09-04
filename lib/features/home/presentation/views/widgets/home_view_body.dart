@@ -30,6 +30,20 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     context.read<ProductsCubit>().getProducts(categoryId: categoryId);
   }
 
+  void _onSearchChanged(String query) {
+    if (query.isEmpty) {
+      context.read<ProductsCubit>().getProducts(categoryId: selectedCategoryId);
+    } else {
+      // Debounce
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (!mounted) return;
+        if (_searchController.text == query) {
+          context.read<ProductsCubit>().searchProducts(query);
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -59,7 +73,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   userImage:
                       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvts5aHBstDkR8PigS4RmZkbZy78zpZoSuOw&s',
                   searchController: _searchController,
-                  onSearchChanged: (_) {},
+                  onSearchChanged: _onSearchChanged,
                 );
               },
             ),

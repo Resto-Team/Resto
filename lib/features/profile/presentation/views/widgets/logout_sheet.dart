@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 
 class LogoutSheet extends StatelessWidget {
@@ -53,7 +54,7 @@ class LogoutSheet extends StatelessWidget {
             const Gap(18),
 
             Text(
-              'Log out?',
+              context.strings.logoutConfirmTitle,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
@@ -64,7 +65,7 @@ class LogoutSheet extends StatelessWidget {
             const Gap(8),
 
             Text(
-              'Are you sure you want to log out of your account?',
+              context.strings.logoutConfirmMessage,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -88,7 +89,7 @@ class LogoutSheet extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Cancel',
+                      context.strings.cancel,
                       style: TextStyle(
                         color: primaryTextColor,
                         fontWeight: FontWeight.w600,
@@ -111,9 +112,9 @@ class LogoutSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: const Text(
-                      'Log out',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                    child: Text(
+                      context.strings.logout,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/helpers/extensions.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/routing/routes.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_button.dart';
@@ -37,7 +38,7 @@ class LogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return CustomButton(
-      text: 'Log out',
+      text: context.strings.logout,
       color: isDark
           ? Colors.red.shade900.withValues(alpha: 0.3)
           : Colors.red.shade50,

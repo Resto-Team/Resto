@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 import 'package:resto/features/home/domain/entities/product_entity.dart';
@@ -16,14 +17,27 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final primaryTextColor =
+        isDark ? AppColors.darkTextPrimary : AppColors.primaryColor;
+    final secondaryTextColor =
+        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final priceColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final tagColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: ProductDetailsBottomBar(product: product),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             pinned: true,
             expandedHeight: 300.h,
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor:
+                isDark ? AppColors.darkSurface : AppColors.primaryColor,
             iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(product.image ?? '', fit: BoxFit.cover),
@@ -43,7 +57,7 @@ class ProductDetailsView extends StatelessWidget {
                           text: product.name ?? '',
                           size: 22.sp,
                           weight: FontWeight.w600,
-                          color: AppColors.primaryColor,
+                          color: primaryTextColor,
                         ),
                       ),
                       RatingBadge(rating: product.rating ?? 0),
@@ -56,16 +70,16 @@ class ProductDetailsView extends StatelessWidget {
                     text: product.category?.name ?? '',
                     size: 13,
                     weight: FontWeight.w400,
-                    color: AppColors.lightTextSecondary,
+                    color: secondaryTextColor,
                   ),
 
                   Gap(16.h),
 
                   CustomText(
-                    text: '${product.price ?? 0} EGP',
+                    text: '${product.price ?? 0} ${context.strings.egp}',
                     size: 20,
                     weight: FontWeight.w700,
-                    color: AppColors.primaryColor,
+                    color: priceColor,
                   ),
 
                   Gap(16.h),
@@ -77,37 +91,37 @@ class ProductDetailsView extends StatelessWidget {
                         spacing: 8,
                         children: [
                           if (product.isSpicy == true)
-                            const Tag(label: 'Spicy', color: Colors.red),
+                            Tag(label: context.strings.spicy, color: Colors.red),
                           if (product.isAvailable == false)
-                            const Tag(label: 'Unavailable', color: Colors.grey),
+                            Tag(label: context.strings.unavailable, color: Colors.grey),
                         ],
                       ),
                     ),
 
-                  const CustomText(
-                    text: 'Description',
+                  CustomText(
+                    text: context.strings.description,
                     size: 16,
                     weight: FontWeight.w600,
-                    color: AppColors.primaryColor,
+                    color: primaryTextColor,
                   ),
 
                   Gap(8.h),
 
                   Text(
                     product.description ?? '',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.lightTextSecondary,
+                      color: secondaryTextColor,
                     ),
                   ),
 
                   if (product.ingredients?.isNotEmpty == true) ...[
                     Gap(20.h),
-                    const CustomText(
-                      text: 'Ingredients',
+                    CustomText(
+                      text: context.strings.ingredients,
                       size: 16,
                       weight: FontWeight.w600,
-                      color: AppColors.primaryColor,
+                      color: primaryTextColor,
                     ),
                     Gap(8.h),
                     Wrap(
@@ -115,7 +129,7 @@ class ProductDetailsView extends StatelessWidget {
                       runSpacing: 8,
                       children: [
                         for (final ingredient in product.ingredients!)
-                          Tag(label: ingredient, color: AppColors.primaryColor),
+                          Tag(label: ingredient, color: tagColor),
                       ],
                     ),
                   ],
