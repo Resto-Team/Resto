@@ -65,14 +65,16 @@ class _ProductReviewsSectionState extends State<ProductReviewsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CustomText(
+        CustomText(
           text: 'Reviews',
           size: 16,
           weight: FontWeight.w600,
-          color: AppColors.primaryColor,
+          color: isDark ? AppColors.darkTextPrimary : AppColors.primaryColor,
         ),
 
         Gap(12.h),
@@ -107,11 +109,15 @@ class _AddReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xffF3F4F6),
+        color: isDark ? AppColors.darkSurface : const Color(0xffF3F4F6),
         borderRadius: BorderRadius.circular(16),
+        border: isDark ? Border.all(color: AppColors.darkBorder) : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,22 +130,36 @@ class _AddReviewCard extends StatelessWidget {
             controller: controller,
             minLines: 1,
             maxLines: 3,
-            style: const TextStyle(fontSize: 14),
+            style: TextStyle(
+              fontSize: 14,
+              color: isDark
+                  ? AppColors.darkTextPrimary
+                  : AppColors.lightTextPrimary,
+            ),
             decoration: InputDecoration(
               hintText: 'Write a review...',
-              hintStyle: const TextStyle(
-                color: AppColors.lightTextMuted,
+              hintStyle: TextStyle(
+                color:
+                    isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
                 fontSize: 14,
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: isDark ? AppColors.darkSurfaceVariant : Colors.white,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 12,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
+                borderSide: isDark
+                    ? const BorderSide(color: AppColors.darkBorder)
+                    : BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: isDark
+                    ? const BorderSide(color: AppColors.darkBorder)
+                    : BorderSide.none,
               ),
             ),
           ),
@@ -150,11 +170,11 @@ class _AddReviewCard extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: onSubmit,
-              child: const CustomText(
+              child: CustomText(
                 text: 'Post Review',
                 size: 13,
                 weight: FontWeight.w600,
-                color: AppColors.primaryColor,
+                color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
               ),
             ),
           ),
@@ -171,6 +191,10 @@ class _ReviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final primary = isDark ? AppColors.primaryLight : AppColors.primaryColor;
+
     return Padding(
       padding: EdgeInsets.only(bottom: 14.h),
       child: Row(
@@ -178,12 +202,12 @@ class _ReviewTile extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 18,
-            backgroundColor: AppColors.primaryColor.withValues(alpha: 0.15),
+            backgroundColor: primary.withValues(alpha: isDark ? 0.25 : 0.15),
             child: CustomText(
               text: review.name.isNotEmpty ? review.name[0] : '?',
               size: 14,
               weight: FontWeight.w700,
-              color: AppColors.primaryColor,
+              color: primary,
             ),
           ),
 
@@ -199,6 +223,9 @@ class _ReviewTile extends StatelessWidget {
                       text: review.name,
                       size: 14,
                       weight: FontWeight.w600,
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.lightTextPrimary,
                     ),
                     const Gap(8),
                     _StarRow(rating: review.rating, size: 14),
@@ -209,9 +236,11 @@ class _ReviewTile extends StatelessWidget {
 
                 Text(
                   review.comment,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
-                    color: AppColors.lightTextSecondary,
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.lightTextSecondary,
                   ),
                 ),
               ],

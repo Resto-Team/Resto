@@ -10,10 +10,14 @@ class RatingBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: Colors.amber.shade100,
+        color: isDark
+            ? Colors.amber.shade900.withValues(alpha: 0.3)
+            : Colors.amber.shade100,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Row(
@@ -25,7 +29,7 @@ class RatingBadge extends StatelessWidget {
             text: rating.toString(),
             size: 13.sp,
             weight: FontWeight.w600,
-            color: Colors.amber.shade900,
+            color: isDark ? Colors.amber.shade300 : Colors.amber.shade900,
           ),
         ],
       ),

@@ -22,6 +22,19 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
+  Future<List<ProductEntity>> searchProducts(String query) async {
+    try {
+      final response = await apiService.get(
+        ApiEndpoints.search,
+        param: {'q': query},
+      );
+      return (response as List).map((e) => ProductModel.fromJson(e)).toList();
+    } on Exception catch (e) {
+      throw Exception('Failed to search products: $e');
+    }
+  }
+
+  @override
   Future<List<CategoryEntity>> getCategories() async {
     try {
       final response = await apiService.get(ApiEndpoints.categories);

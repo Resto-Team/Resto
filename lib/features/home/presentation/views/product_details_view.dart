@@ -16,14 +16,27 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final primaryTextColor =
+        isDark ? AppColors.darkTextPrimary : AppColors.primaryColor;
+    final secondaryTextColor =
+        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final priceColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final tagColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: ProductDetailsBottomBar(product: product),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             pinned: true,
             expandedHeight: 300.h,
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor:
+                isDark ? AppColors.darkSurface : AppColors.primaryColor,
             iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(product.image ?? '', fit: BoxFit.cover),
@@ -43,7 +56,7 @@ class ProductDetailsView extends StatelessWidget {
                           text: product.name ?? '',
                           size: 22.sp,
                           weight: FontWeight.w600,
-                          color: AppColors.primaryColor,
+                          color: primaryTextColor,
                         ),
                       ),
                       RatingBadge(rating: product.rating ?? 0),
@@ -56,7 +69,7 @@ class ProductDetailsView extends StatelessWidget {
                     text: product.category?.name ?? '',
                     size: 13,
                     weight: FontWeight.w400,
-                    color: AppColors.lightTextSecondary,
+                    color: secondaryTextColor,
                   ),
 
                   Gap(16.h),
@@ -65,7 +78,7 @@ class ProductDetailsView extends StatelessWidget {
                     text: '${product.price ?? 0} EGP',
                     size: 20,
                     weight: FontWeight.w700,
-                    color: AppColors.primaryColor,
+                    color: priceColor,
                   ),
 
                   Gap(16.h),
@@ -84,30 +97,30 @@ class ProductDetailsView extends StatelessWidget {
                       ),
                     ),
 
-                  const CustomText(
+                  CustomText(
                     text: 'Description',
                     size: 16,
                     weight: FontWeight.w600,
-                    color: AppColors.primaryColor,
+                    color: primaryTextColor,
                   ),
 
                   Gap(8.h),
 
                   Text(
                     product.description ?? '',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.lightTextSecondary,
+                      color: secondaryTextColor,
                     ),
                   ),
 
                   if (product.ingredients?.isNotEmpty == true) ...[
                     Gap(20.h),
-                    const CustomText(
+                    CustomText(
                       text: 'Ingredients',
                       size: 16,
                       weight: FontWeight.w600,
-                      color: AppColors.primaryColor,
+                      color: primaryTextColor,
                     ),
                     Gap(8.h),
                     Wrap(
@@ -115,7 +128,7 @@ class ProductDetailsView extends StatelessWidget {
                       runSpacing: 8,
                       children: [
                         for (final ingredient in product.ingredients!)
-                          Tag(label: ingredient, color: AppColors.primaryColor),
+                          Tag(label: ingredient, color: tagColor),
                       ],
                     ),
                   ],
