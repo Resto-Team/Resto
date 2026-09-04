@@ -34,7 +34,12 @@ class _RootViewState extends State<RootView> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    screens = const [HomeView(), CartView(), OrderHistoryView(), ProfileView()];
+    screens = [
+      const HomeView(),
+      const CartView(),
+      const OrderHistoryView(),
+      ProfileView(onOrdersTap: () => _onTabTapped(_historyTabIndex)),
+    ];
 
     iconControllers = List.generate(
       screens.length,
@@ -98,6 +103,9 @@ class _RootViewState extends State<RootView> with TickerProviderStateMixin {
   }
 
   Widget buildIOSNavigation() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return GlassBottomBar(
       items: const [
         GlassBarItem(
@@ -126,22 +134,27 @@ class _RootViewState extends State<RootView> with TickerProviderStateMixin {
       style: GlassBottomNavStyle(
         widthFactor: 1.0,
         height: 80.h,
-        accent: AppColors.primaryColor,
+        accent: isDark ? AppColors.primaryLight : AppColors.primaryColor,
       ),
     );
   }
 
   Widget buildAndroidNavigation() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color: isDark ? AppColors.darkSurface : AppColors.primaryColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(28.r),
           topRight: Radius.circular(28.r),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.4)
+                : Colors.black.withValues(alpha: 0.12),
             blurRadius: 20,
             offset: const Offset(0, -4),
           ),

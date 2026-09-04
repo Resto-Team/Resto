@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/theme/app_colors.dart';
+import 'package:resto/core/theme/manager/theme_cubit.dart';
 import 'package:resto/features/auth/presentation/manager/session/session_cubit.dart';
 import 'package:resto/features/profile/presentation/views/widgets/logout_button.dart';
 import 'package:resto/features/profile/presentation/views/widgets/profile_header.dart';
@@ -10,15 +11,22 @@ import 'package:resto/features/profile/presentation/views/widgets/profile_menu_i
 import 'package:resto/features/profile/presentation/views/widgets/profile_menu_section.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  const ProfileView({super.key, this.onOrdersTap});
+
+  final VoidCallback? onOrdersTap;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Color.alphaBlend(
-        AppColors.primaryColor.withValues(alpha: 0.1),
-        Colors.white,
-      ),
+      backgroundColor: isDark
+          ? theme.scaffoldBackgroundColor
+          : Color.alphaBlend(
+              AppColors.primaryColor.withValues(alpha: 0.1),
+              Colors.white,
+            ),
       body: Column(
         children: [
           BlocBuilder<SessionCubit, SessionState>(
@@ -51,7 +59,7 @@ class ProfileView extends StatelessWidget {
                     ProfileMenuItem(
                       icon: Icons.receipt_long_rounded,
                       label: 'My Orders',
-                      onTap: () {},
+                      onTap: onOrdersTap ?? () {},
                     ),
                     ProfileMenuItem(
                       icon: Icons.favorite_border_rounded,
@@ -75,9 +83,20 @@ class ProfileView extends StatelessWidget {
                   title: 'PREFERENCES',
                   items: [
                     ProfileMenuItem(
-                      icon: Icons.notifications_none_rounded,
-                      label: 'Notifications',
-                      onTap: () {},
+                      icon: isDark
+                          ? Icons.dark_mode_rounded
+                          : Icons.light_mode_rounded,
+                      label: isDark ? 'Dark Mode' : 'Light Mode',
+                      trailing: Switch.adaptive(
+                        value: isDark,
+                        onChanged: (_) {
+                          context.read<ThemeCubit>().toggleTheme();
+                        },
+                        activeTrackColor: AppColors.primaryLight,
+                      ),
+                      onTap: () {
+                        context.read<ThemeCubit>().toggleTheme();
+                      },
                     ),
                     ProfileMenuItem(
                       icon: Icons.language_rounded,

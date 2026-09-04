@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/functions/app_snack_bar.dart';
-import 'package:resto/core/network/paymob_service.dart';
+import 'package:resto/core/services/paymob_service.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_button.dart';
 import 'package:resto/features/auth/presentation/manager/session/session_cubit.dart';

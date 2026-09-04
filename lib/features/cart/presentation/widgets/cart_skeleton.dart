@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/theme/app_colors.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CartSkeleton extends StatelessWidget {
@@ -8,8 +9,20 @@ class CartSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBg = theme.cardTheme.color ??
+        (isDark ? AppColors.darkSurface : Colors.white);
+    final bottomBarBg = isDark ? AppColors.darkSurface : Colors.white;
+
     return Skeletonizer(
       enabled: true,
+      effect: isDark
+          ? const ShimmerEffect(
+              baseColor: AppColors.darkSurfaceVariant,
+              highlightColor: AppColors.darkBorder,
+            )
+          : null,
       child: Column(
         children: [
           Expanded(
@@ -22,7 +35,7 @@ class CartSkeleton extends StatelessWidget {
                   width: double.infinity,
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: cardBg,
                     borderRadius: BorderRadius.circular(18.r),
                   ),
                   child: Row(
@@ -104,7 +117,7 @@ class CartSkeleton extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 100.h),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: bottomBarBg,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(24.r),
                 topRight: Radius.circular(24.r),

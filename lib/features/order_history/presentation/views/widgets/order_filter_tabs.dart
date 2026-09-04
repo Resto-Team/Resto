@@ -17,6 +17,16 @@ class OrderFilterTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final activeColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final unselectedBg = isDark ? AppColors.darkSurface : Colors.white;
+    final unselectedBorder =
+        isDark ? AppColors.darkBorder : AppColors.lightBorder;
+    final unselectedText =
+        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -32,21 +42,17 @@ class OrderFilterTabs extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primaryColor : Colors.white,
+                  color: isSelected ? activeColor : unselectedBg,
                   borderRadius: BorderRadius.circular(24.r),
                   border: Border.all(
-                    color: isSelected
-                        ? AppColors.primaryColor
-                        : AppColors.lightBorder,
+                    color: isSelected ? activeColor : unselectedBorder,
                   ),
                 ),
                 child: CustomText(
                   text: labels[index],
                   size: 13.sp,
                   weight: FontWeight.w600,
-                  color: isSelected
-                      ? Colors.white
-                      : AppColors.lightTextSecondary,
+                  color: isSelected ? Colors.white : unselectedText,
                   maxLines: 1,
                 ),
               ),

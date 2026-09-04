@@ -21,10 +21,13 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(20.r),
       child: Card(
-        color: Colors.white,
+        color: theme.cardTheme.color,
         margin: EdgeInsets.zero,
         child: InkWell(
           onTap: onTap,
@@ -69,14 +72,18 @@ class ProductItem extends StatelessWidget {
                           weight: FontWeight.w600,
                           size: 15.sp,
                           maxLines: 1,
-                          color: Colors.green.shade900,
+                          color: isDark
+                              ? AppColors.darkTextPrimary
+                              : Colors.green.shade900,
                         ),
                         Gap(4.h),
                         CustomText(
                           text: desc,
                           size: 11.sp,
                           maxLines: 2,
-                          color: AppColors.primaryColor,
+                          color: isDark
+                              ? AppColors.darkTextSecondary
+                              : AppColors.primaryColor,
                           weight: FontWeight.w300,
                         ),
                         Gap(4.h),

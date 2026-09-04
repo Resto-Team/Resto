@@ -15,6 +15,8 @@ import 'package:resto/features/home/presentation/manager/categories/categories_c
 import 'package:resto/features/home/presentation/manager/products/products_cubit.dart';
 import 'package:resto/features/order_history/data/repos/order_history_repo_impl.dart';
 import 'package:resto/features/order_history/domain/repositories/order_history_repo.dart';
+import 'package:resto/core/helpers/cache_helper.dart';
+import 'package:resto/core/theme/manager/theme_cubit.dart';
 import 'package:resto/features/order_history/presentation/manager/cubit/order_history_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -44,5 +46,10 @@ Future<void> setupServiceLocator() async {
   );
   getIt.registerLazySingleton<OrderHistoryCubit>(
     () => OrderHistoryCubit(orderHistoryRepo: getIt<OrderHistoryRepo>()),
+  );
+
+  getIt.registerLazySingleton<CacheHelper>(() => CacheHelper());
+  getIt.registerLazySingleton<ThemeCubit>(
+    () => ThemeCubit(cacheHelper: getIt<CacheHelper>()),
   );
 }

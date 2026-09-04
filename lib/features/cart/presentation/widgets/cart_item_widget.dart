@@ -94,15 +94,28 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBg = theme.cardTheme.color ??
+        (isDark ? AppColors.darkSurface : Colors.white);
+    final titleColor =
+        isDark ? AppColors.darkTextPrimary : Colors.black87;
+    final subtitleColor =
+        isDark ? AppColors.darkTextMuted : Colors.grey.shade600;
+    final priceColor =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBg,
         borderRadius: BorderRadius.circular(18.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -117,7 +130,7 @@ class CartItemCard extends StatelessWidget {
             child: Container(
               width: 75.w,
               height: 75.h,
-              color: Colors.grey.shade100,
+              color: isDark ? AppColors.darkSurfaceVariant : Colors.grey.shade100,
               child: imageUrl.isNotEmpty
                   ? Image.network(
                       imageUrl,
@@ -125,20 +138,22 @@ class CartItemCard extends StatelessWidget {
                       height: 75.h,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
-                        color: AppColors.primaryColor.withValues(alpha: 0.1),
+                        color: (isDark ? AppColors.primaryLight : AppColors.primaryColor)
+                            .withValues(alpha: 0.1),
                         child: Icon(
                           Icons.fastfood_rounded,
                           size: 34.r,
-                          color: AppColors.primaryColor,
+                          color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
                         ),
                       ),
                     )
                   : Container(
-                      color: AppColors.primaryColor.withValues(alpha: 0.1),
+                      color: (isDark ? AppColors.primaryLight : AppColors.primaryColor)
+                          .withValues(alpha: 0.1),
                       child: Icon(
                         Icons.fastfood_rounded,
                         size: 34.r,
-                        color: AppColors.primaryColor,
+                        color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
                       ),
                     ),
             ),
@@ -160,7 +175,7 @@ class CartItemCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: titleColor,
                     ),
                   ),
                 ],
@@ -172,7 +187,7 @@ class CartItemCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 11.sp,
-                      color: Colors.grey.shade600,
+                      color: subtitleColor,
                     ),
                   ),
                 ],
@@ -183,7 +198,7 @@ class CartItemCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.primaryColor,
+                      color: priceColor,
                     ),
                   ),
                 ],

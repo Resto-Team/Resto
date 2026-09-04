@@ -23,6 +23,16 @@ class FoodCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final unselectedBg =
+        isDark ? AppColors.darkSurface : const Color(0xffF3F4F6);
+    final borderColor = isDark ? AppColors.darkBorder : Colors.black12;
+    final unselectedTextColor =
+        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final selectedBg =
+        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -35,10 +45,8 @@ class FoodCategory extends StatelessWidget {
               curve: Curves.easeOut,
               margin: const EdgeInsets.only(right: 8),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12),
-                color: isSelected
-                    ? AppColors.primaryColor
-                    : const Color(0xffF3F4F6),
+                border: Border.all(color: borderColor),
+                color: isSelected ? selectedBg : unselectedBg,
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
@@ -47,9 +55,7 @@ class FoodCategory extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: isSelected
-                      ? Colors.white
-                      : AppColors.lightTextSecondary,
+                  color: isSelected ? Colors.white : unselectedTextColor,
                 ),
                 child: Text(
                   item.name,

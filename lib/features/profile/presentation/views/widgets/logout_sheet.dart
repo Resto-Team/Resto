@@ -8,6 +8,15 @@ class LogoutSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final borderColor =
+        isDark ? AppColors.darkBorder : AppColors.lightBorder;
+    final primaryTextColor =
+        isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final secondaryTextColor =
+        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
@@ -18,7 +27,7 @@ class LogoutSheet extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: AppColors.lightBorder,
+                color: borderColor,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -29,32 +38,38 @@ class LogoutSheet extends StatelessWidget {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: Colors.red.shade50,
+                color: isDark
+                    ? Colors.red.shade900.withValues(alpha: 0.3)
+                    : Colors.red.shade50,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.logout_rounded,
-                color: Colors.red.shade600,
+                color: isDark ? Colors.red.shade400 : Colors.red.shade600,
                 size: 30,
               ),
             ),
 
             const Gap(18),
 
-            const Text(
+            Text(
               'Log out?',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+                color: primaryTextColor,
+              ),
             ),
 
             const Gap(8),
 
-            const Text(
+            Text(
               'Are you sure you want to log out of your account?',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
                 height: 1.5,
-                color: AppColors.lightTextSecondary,
+                color: secondaryTextColor,
               ),
             ),
             Gap(28.h),
@@ -67,15 +82,15 @@ class LogoutSheet extends StatelessWidget {
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(52),
-                      side: const BorderSide(color: AppColors.lightBorder),
+                      side: BorderSide(color: borderColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Cancel',
                       style: TextStyle(
-                        color: AppColors.lightTextPrimary,
+                        color: primaryTextColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
