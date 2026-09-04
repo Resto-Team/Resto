@@ -5,6 +5,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:glass_bottom_navigation/nav_style.dart';
 import 'package:resto/core/di/di.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/features/auth/presentation/manager/session/session_cubit.dart';
 import 'package:resto/features/cart/presentation/views/cart_view.dart';
@@ -107,25 +108,25 @@ class _RootViewState extends State<RootView> with TickerProviderStateMixin {
     final isDark = theme.brightness == Brightness.dark;
 
     return GlassBottomBar(
-      items: const [
+      items: [
         GlassBarItem(
           icon: Icons.home_rounded,
-          label: 'Home',
+          label: context.strings.home,
           nativeSymbolName: 'house.fill',
         ),
         GlassBarItem(
           icon: Icons.shopping_cart_rounded,
-          label: 'Cart',
+          label: context.strings.cart,
           nativeSymbolName: 'cart.fill',
         ),
         GlassBarItem(
           icon: Icons.history,
-          label: 'My Orders',
+          label: context.strings.myOrders,
           nativeSymbolName: 'clock.fill',
         ),
         GlassBarItem(
           icon: Icons.person_rounded,
-          label: 'Profile',
+          label: context.strings.profile,
           nativeSymbolName: 'person.fill',
         ),
       ],
@@ -171,28 +172,28 @@ class _RootViewState extends State<RootView> with TickerProviderStateMixin {
                 child: _buildNavItem(
                   index: 0,
                   icon: Icons.home_rounded,
-                  label: 'Home',
+                  label: context.strings.home,
                 ),
               ),
               Expanded(
                 child: _buildNavItem(
                   index: 1,
                   icon: Icons.shopping_cart_rounded,
-                  label: 'Cart',
+                  label: context.strings.cart,
                 ),
               ),
               Expanded(
                 child: _buildNavItem(
                   index: 2,
                   icon: Icons.history,
-                  label: 'My Orders',
+                  label: context.strings.myOrders,
                 ),
               ),
               Expanded(
                 child: _buildNavItem(
                   index: 3,
                   icon: Icons.person_rounded,
-                  label: 'Profile',
+                  label: context.strings.profile,
                 ),
               ),
             ],

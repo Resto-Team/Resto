@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/widgets/error_retry_view.dart';
 import 'package:resto/features/order_history/domain/entities/order_entity.dart';
 import 'package:resto/features/order_history/presentation/manager/cubit/order_history_cubit.dart';
@@ -9,13 +10,6 @@ import 'package:resto/features/order_history/presentation/views/widgets/order_fi
 import 'package:resto/features/order_history/presentation/views/widgets/order_history_header.dart';
 import 'package:resto/features/order_history/presentation/views/widgets/order_history_skeleton.dart';
 import 'package:resto/features/order_history/presentation/views/widgets/orders_list_view.dart';
-
-const List<String> filterLabels = [
-  'All Orders',
-  'Ongoing',
-  'Completed',
-  'Cancelled',
-];
 
 class OrderHistoryViewBody extends StatefulWidget {
   const OrderHistoryViewBody({super.key});
@@ -48,6 +42,13 @@ class _OrderHistoryBodyState extends State<OrderHistoryViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final filterLabels = [
+      context.strings.allOrders,
+      context.strings.ongoing,
+      context.strings.completed,
+      context.strings.cancelled,
+    ];
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(

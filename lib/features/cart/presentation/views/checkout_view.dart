@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/functions/app_snack_bar.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/services/paymob_service.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_button.dart';
@@ -86,7 +87,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       } else {
         showAnimatedSnackbar(
           context,
-          message: 'تم إلغاء عملية الدفع أو فشلت',
+          message: context.strings.paymentCancelledOrFailed,
           type: AnimatedSnackBarType.error,
         );
       }
@@ -153,9 +154,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Order summary',
-                          style: TextStyle(
+                        Text(
+                          context.strings.orderSummary,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: AppColors.lightTextPrimary,
@@ -163,13 +164,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         const Gap(12),
                         SummaryRow(
-                          title: 'Order',
-                          value: '\$${widget.totalPrice.toString()}',
+                          title: context.strings.order,
+                          value: '${widget.totalPrice} ${context.strings.egp}',
                         ),
-                        const SummaryRow(title: 'Taxes', value: '\$0.3'),
-                        const SummaryRow(
-                          title: 'Delivery fees',
-                          value: '\$1.5',
+                        SummaryRow(title: context.strings.taxes, value: '0.3 ${context.strings.egp}'),
+                        SummaryRow(
+                          title: context.strings.deliveryFees,
+                          value: '1.5 ${context.strings.egp}',
                         ),
                         const Gap(8),
                         const Divider(
@@ -178,26 +179,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         const Gap(8),
                         SummaryRow(
-                          title: 'Total:',
-                          value: '\$${widget.totalPrice + 0.3 + 1.5}',
+                          title: '${context.strings.total}:',
+                          value: '${widget.totalPrice + 0.3 + 1.5} ${context.strings.egp}',
                           isBold: true,
                           fontSize: 16,
                         ),
                         const Gap(8),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Estimated delivery time:',
-                              style: TextStyle(
+                              context.strings.estimatedDeliveryTime,
+                              style: const TextStyle(
                                 color: AppColors.lightTextPrimary,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
-                              '15 - 30 mins',
-                              style: TextStyle(
+                              context.strings.deliveryTimeValue,
+                              style: const TextStyle(
                                 color: AppColors.lightTextPrimary,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
@@ -259,7 +260,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             if (state is CreateOrderSuccessState) {
                               showAnimatedSnackbar(
                                 context,
-                                message: 'Order created successfully',
+                                message: context.strings.orderPlacedSuccess,
                                 type: AnimatedSnackBarType.success,
                               );
                               Navigator.pop(context);
@@ -271,10 +272,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                             return CustomButton(
                               text: isLoading
-                                  ? 'Please wait...'
+                                  ? context.strings.placingOrder
                                   : (paymentMethod == 'card'
-                                      ? 'Pay with Card'
-                                      : 'Pay Now'),
+                                      ? context.strings.payWithCard
+                                      : context.strings.placeOrder),
                               color: AppColors.primaryColor,
                               radius: 20,
                               onTap: () {

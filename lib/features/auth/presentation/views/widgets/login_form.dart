@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/widgets/custom_button.dart';
 import 'package:resto/core/widgets/custom_text_field.dart';
 
@@ -39,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           CustomTextfield(
-            hint: 'Email',
+            hint: context.strings.email,
             isPassword: false,
             controller: _emailController,
           ),
@@ -47,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
           Gap(20.h),
 
           CustomTextfield(
-            hint: 'Password',
+            hint: context.strings.password,
             isPassword: true,
             controller: _passwordController,
           ),
@@ -55,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
           Gap(20.h),
 
           CustomButton(
-            text: widget.isLoading ? 'Logging in...' : 'Login',
+            text: widget.isLoading ? context.strings.loggingIn : context.strings.login,
             onTap: widget.isLoading ? null : _submit,
             textColor: Colors.white,
             color: Colors.white.withValues(alpha: 0.40),

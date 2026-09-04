@@ -36,6 +36,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     } else {
       // Debounce
       Future.delayed(const Duration(milliseconds: 500), () {
+        if (!mounted) return;
         if (_searchController.text == query) {
           context.read<ProductsCubit>().searchProducts(query);
         }

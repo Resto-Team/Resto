@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:resto/core/localization/app_strings.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key, required this.controller, this.onChanged});
@@ -19,7 +20,7 @@ class SearchField extends StatelessWidget {
         decoration: InputDecoration(
           filled: true,
           contentPadding: EdgeInsets.zero,
-          hintText: 'Search..',
+          hintText: context.strings.search,
           hintStyle: TextStyle(color: Colors.white, fontSize: 14.sp),
           fillColor: Colors.transparent,
           prefixIcon: Icon(

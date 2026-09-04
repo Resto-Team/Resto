@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/helpers/extensions.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/routing/routes.dart';
 import 'package:resto/core/theme/app_colors.dart';
 
@@ -48,7 +49,7 @@ class CheckOutBarWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Total ($itemCount items)',
+                context.strings.totalWithItemsCount(itemCount),
                 style: TextStyle(
                   fontSize: 12.sp,
                   color: isDark
@@ -58,7 +59,7 @@ class CheckOutBarWidget extends StatelessWidget {
               ),
               Gap(4.h),
               Text(
-                '$totalPrice EGP',
+                '$totalPrice ${context.strings.egp}',
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
@@ -71,11 +72,6 @@ class CheckOutBarWidget extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              // showAnimatedSnackbar(
-              //   context,
-              //   message: 'Checkout completed successfully!',
-              //   type: AnimatedSnackBarType.success,
-              // );
               context.pushNamed(Routes.checkoutView, arguments: totalPrice);
             },
             style: ElevatedButton.styleFrom(
@@ -88,7 +84,7 @@ class CheckOutBarWidget extends StatelessWidget {
               elevation: 0,
             ),
             child: Text(
-              'Checkout',
+              context.strings.checkout,
               style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 import 'package:resto/features/order_history/domain/entities/order_entity.dart';
@@ -67,7 +68,7 @@ class OrderHistoryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomText(
-                  text: 'Order #${shortOrderId(order.id)}',
+                  text: context.strings.orderNumberWithId(shortOrderId(order.id)),
                   size: 16.sp,
                   weight: FontWeight.w700,
                   color: orderTitleColor,
@@ -81,7 +82,7 @@ class OrderHistoryCard extends StatelessWidget {
           CustomText(
             text:
                 '${formatOrderDate(order.createdAt)} • '
-                '${orderItemsQuantity(order.items)} Items',
+                '${orderItemsQuantity(order.items)} ${context.strings.items}',
             size: 12.sp,
             weight: FontWeight.w400,
             color: dateColor,
@@ -134,23 +135,23 @@ class OrderHistoryCard extends StatelessWidget {
           ),
           Gap(16.h),
           if (_isCancelled)
-            _buildHelpButton()
+            _buildHelpButton(context)
           else if (status.isActive)
-            _buildTrackButtons()
+            _buildTrackButtons(context)
           else
-            _buildDeliveredButtons(),
+            _buildDeliveredButtons(context),
         ],
       ),
     );
   }
 
-  Widget _buildDeliveredButtons() {
+  Widget _buildDeliveredButtons(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: OrderActionButton(
             icon: Icons.receipt_long_outlined,
-            label: 'Details',
+            label: context.strings.details,
             filled: false,
             onTap: onDetails,
           ),
@@ -159,7 +160,7 @@ class OrderHistoryCard extends StatelessWidget {
         Expanded(
           child: OrderActionButton(
             icon: Icons.refresh_rounded,
-            label: 'Reorder',
+            label: context.strings.reorder,
             filled: true,
             onTap: onReorder,
           ),
@@ -168,13 +169,13 @@ class OrderHistoryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTrackButtons() {
+  Widget _buildTrackButtons(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: OrderActionButton(
             icon: Icons.receipt_long_outlined,
-            label: 'Details',
+            label: context.strings.details,
             filled: false,
             onTap: onDetails,
           ),
@@ -183,7 +184,7 @@ class OrderHistoryCard extends StatelessWidget {
         Expanded(
           child: OrderActionButton(
             icon: Icons.location_on_outlined,
-            label: 'Track Order',
+            label: context.strings.trackOrder,
             filled: true,
             onTap: onTrack,
           ),
@@ -192,12 +193,12 @@ class OrderHistoryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHelpButton() {
+  Widget _buildHelpButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: OrderActionButton(
         icon: Icons.help_outline_rounded,
-        label: 'Help with Order',
+        label: context.strings.helpWithOrder,
         filled: false,
         onTap: onHelp,
       ),

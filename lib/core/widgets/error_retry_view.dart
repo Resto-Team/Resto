@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_button.dart';
 import 'package:resto/core/widgets/custom_text.dart';
@@ -35,7 +36,7 @@ class ErrorRetryView extends StatelessWidget {
           ),
           Gap(4.h),
           CustomButton(
-            text: 'Try Again',
+            text: context.strings.tryAgain,
             width: 160,
             height: 44,
             onTap: onRetry,

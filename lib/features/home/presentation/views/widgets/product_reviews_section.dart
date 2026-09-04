@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 
@@ -71,7 +72,7 @@ class _ProductReviewsSectionState extends State<ProductReviewsSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          text: 'Reviews',
+          text: context.strings.reviews,
           size: 16,
           weight: FontWeight.w600,
           color: isDark ? AppColors.darkTextPrimary : AppColors.primaryColor,
@@ -137,7 +138,7 @@ class _AddReviewCard extends StatelessWidget {
                   : AppColors.lightTextPrimary,
             ),
             decoration: InputDecoration(
-              hintText: 'Write a review...',
+              hintText: context.strings.writeReview,
               hintStyle: TextStyle(
                 color:
                     isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
@@ -171,7 +172,7 @@ class _AddReviewCard extends StatelessWidget {
             child: TextButton(
               onPressed: onSubmit,
               child: CustomText(
-                text: 'Post Review',
+                text: context.strings.postReview,
                 size: 13,
                 weight: FontWeight.w600,
                 color: isDark ? AppColors.primaryLight : AppColors.primaryColor,

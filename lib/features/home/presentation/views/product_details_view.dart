@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 import 'package:resto/features/home/domain/entities/product_entity.dart';
@@ -75,7 +76,7 @@ class ProductDetailsView extends StatelessWidget {
                   Gap(16.h),
 
                   CustomText(
-                    text: '${product.price ?? 0} EGP',
+                    text: '${product.price ?? 0} ${context.strings.egp}',
                     size: 20,
                     weight: FontWeight.w700,
                     color: priceColor,
@@ -90,15 +91,15 @@ class ProductDetailsView extends StatelessWidget {
                         spacing: 8,
                         children: [
                           if (product.isSpicy == true)
-                            const Tag(label: 'Spicy', color: Colors.red),
+                            Tag(label: context.strings.spicy, color: Colors.red),
                           if (product.isAvailable == false)
-                            const Tag(label: 'Unavailable', color: Colors.grey),
+                            Tag(label: context.strings.unavailable, color: Colors.grey),
                         ],
                       ),
                     ),
 
                   CustomText(
-                    text: 'Description',
+                    text: context.strings.description,
                     size: 16,
                     weight: FontWeight.w600,
                     color: primaryTextColor,
@@ -117,7 +118,7 @@ class ProductDetailsView extends StatelessWidget {
                   if (product.ingredients?.isNotEmpty == true) ...[
                     Gap(20.h),
                     CustomText(
-                      text: 'Ingredients',
+                      text: context.strings.ingredients,
                       size: 16,
                       weight: FontWeight.w600,
                       color: primaryTextColor,

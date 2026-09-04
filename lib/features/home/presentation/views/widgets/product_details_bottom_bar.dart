@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:resto/core/functions/app_snack_bar.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_button.dart';
 import 'package:resto/features/cart/presentation/manager/cubit/cart_cubit.dart';
@@ -119,7 +120,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                     showAnimatedSnackbar(
                       context,
                       message:
-                          '${product.name ?? 'Item'} added to cart successfully!',
+                          '${product.name ?? 'Item'} ${context.strings.addedToCartSuccess}',
                       type: AnimatedSnackBarType.success,
                     );
                   } else if (state is AddItemToCartErrorState) {
@@ -134,7 +135,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                   final isLoading = state is AddItemToCartLoadingState;
 
                   return CustomButton(
-                    text: isLoading ? 'Adding...' : 'Add to Cart',
+                    text: isLoading ? context.strings.adding : context.strings.addToCart,
                     widget: isLoading
                         ? const SizedBox(
                             width: 18,
@@ -157,7 +158,7 @@ class _ProductDetailsBottomBarState extends State<ProductDetailsBottomBar> {
                             } else {
                               showAnimatedSnackbar(
                                 context,
-                                message: 'Product ID is missing',
+                                message: context.strings.productIdMissing,
                                 type: AnimatedSnackBarType.error,
                               );
                             }

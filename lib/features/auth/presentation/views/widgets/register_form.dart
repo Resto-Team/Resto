@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/widgets/custom_button.dart';
 import 'package:resto/core/widgets/custom_text_field.dart';
 
@@ -55,7 +56,7 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           CustomTextfield(
-            hint: 'Name',
+            hint: context.strings.name,
             isPassword: false,
             controller: _nameController,
           ),
@@ -63,14 +64,14 @@ class _RegisterFormState extends State<RegisterForm> {
           Gap(20.h),
 
           CustomTextfield(
-            hint: 'Email',
+            hint: context.strings.email,
             isPassword: false,
             controller: _emailController,
           ),
 
           Gap(20.h),
           CustomTextfield(
-            hint: 'Phone',
+            hint: context.strings.phone,
             isPassword: false,
             controller: _phoneController,
           ),
@@ -78,7 +79,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Gap(20.h),
 
           CustomTextfield(
-            hint: 'Password',
+            hint: context.strings.password,
             isPassword: true,
             controller: _passwordController,
           ),
@@ -86,7 +87,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Gap(20.h),
 
           CustomTextfield(
-            hint: 'Confirm Password',
+            hint: context.strings.confirmPassword,
             isPassword: true,
             controller: _confirmPasswordController,
           ),
@@ -94,7 +95,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Gap(20.h),
 
           CustomButton(
-            text: widget.isLoading ? 'Registering...' : 'Register',
+            text: widget.isLoading ? context.strings.registering : context.strings.register,
             onTap: widget.isLoading ? null : _submit,
             textColor: Colors.white,
             color: Colors.white.withValues(alpha: 0.40),
