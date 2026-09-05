@@ -158,47 +158,15 @@ Cash Payment
 
 ## 📸 Screenshots
 
-> Add your application screenshots below.
-
-### 🏠 Home
-
-<!-- Add Home Screenshot Here -->
+| 🏠 Home (Dark) | 📦 Orders (Dark) | 👤 Profile (Dark) |
+| :---: | :---: | :---: |
+| <img src="assets/screenshots/home_dark.jpeg" width="250" alt="Home Dark" /> | <img src="assets/screenshots/orders_dark.jpeg" width="250" alt="Orders Dark" /> | <img src="assets/screenshots/profile_dark.jpeg" width="250" alt="Profile Dark" /> |
 
 <br>
 
-### 🍔 Product / Meal Details
-
-<!-- Add Meal Details Screenshot Here -->
-
-<br>
-
-### 🛒 Cart
-
-<!-- Add Cart Screenshot Here -->
-
-<br>
-
-### 📦 Orders
-
-<!-- Add Orders Screenshot Here -->
-
-<br>
-
-### 💳 Payment
-
-<!-- Add Payment Screenshot Here -->
-
-<br>
-
-### 👤 Profile
-
-<!-- Add Profile Screenshot Here -->
-
-<br>
-
-### 🌍 Localization
-
-<!-- Add Localization Screenshot Here -->
+| 🍔 Details (Light) | 🛒 Checkout (Light) | 💳 Payment Gateway |
+| :---: | :---: | :---: |
+| <img src="assets/screenshots/details_light.jpeg" width="250" alt="Details Light" /> | <img src="assets/screenshots/checkout_light.jpeg" width="250" alt="Checkout Light" /> | <img src="assets/screenshots/payment_gateway.jpeg" width="250" alt="Payment Gateway" /> |
 
 ---
 
