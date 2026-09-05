@@ -309,8 +309,8 @@ Flutter Developer passionate about building modern, scalable, and user-friendly 
 
 ### Connect With Me
 
-* GitHub: **https://github.com/MoEhab74**
-* LinkedIn: **https://www.linkedin.com/in/mohamed-ehab74/**
+* GitHub: **[MoEhab74](https://github.com/MoEhab74)**
+* LinkedIn: **[Mohamed Ehab](https://www.linkedin.com/in/mohamed-ehab74/)**
 
 ---
 
