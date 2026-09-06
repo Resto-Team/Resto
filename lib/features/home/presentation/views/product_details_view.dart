@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
+import 'package:resto/core/di/di.dart';
 import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
 import 'package:resto/features/home/domain/entities/product_entity.dart';
+import 'package:resto/features/home/domain/repositories/home_repo.dart';
+import 'package:resto/features/home/presentation/manager/reviews/reviews_cubit.dart';
 import 'package:resto/features/home/presentation/views/widgets/ingredients_tag.dart';
 import 'package:resto/features/home/presentation/views/widgets/product_details_bottom_bar.dart';
 import 'package:resto/features/home/presentation/views/widgets/product_reviews_section.dart';
@@ -19,14 +23,14 @@ class ProductDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final primaryTextColor =
-        isDark ? AppColors.darkTextPrimary : AppColors.primaryColor;
-    final secondaryTextColor =
-        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
-    final priceColor =
-        isDark ? AppColors.primaryLight : AppColors.primaryColor;
-    final tagColor =
-        isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final primaryTextColor = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.primaryColor;
+    final secondaryTextColor = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.lightTextSecondary;
+    final priceColor = isDark ? AppColors.primaryLight : AppColors.primaryColor;
+    final tagColor = isDark ? AppColors.primaryLight : AppColors.primaryColor;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -36,8 +40,9 @@ class ProductDetailsView extends StatelessWidget {
           SliverAppBar(
             pinned: true,
             expandedHeight: 300.h,
-            backgroundColor:
-                isDark ? AppColors.darkSurface : AppColors.primaryColor,
+            backgroundColor: isDark
+                ? AppColors.darkSurface
+                : AppColors.primaryColor,
             iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(product.image ?? '', fit: BoxFit.cover),
@@ -91,9 +96,15 @@ class ProductDetailsView extends StatelessWidget {
                         spacing: 8,
                         children: [
                           if (product.isSpicy == true)
-                            Tag(label: context.strings.spicy, color: Colors.red),
+                            Tag(
+                              label: context.strings.spicy,
+                              color: Colors.red,
+                            ),
                           if (product.isAvailable == false)
-                            Tag(label: context.strings.unavailable, color: Colors.grey),
+                            Tag(
+                              label: context.strings.unavailable,
+                              color: Colors.grey,
+                            ),
                         ],
                       ),
                     ),
@@ -109,10 +120,7 @@ class ProductDetailsView extends StatelessWidget {
 
                   Text(
                     product.description ?? '',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: secondaryTextColor,
-                    ),
+                    style: TextStyle(fontSize: 14, color: secondaryTextColor),
                   ),
 
                   if (product.ingredients?.isNotEmpty == true) ...[
@@ -136,7 +144,10 @@ class ProductDetailsView extends StatelessWidget {
 
                   Gap(24.h),
 
-                  const ProductReviewsSection(),
+                  BlocProvider(
+                    create: (context) => ReviewsCubit(getIt<HomeRepo>())..getReviews(product.id ?? ''),
+                    child: ProductReviewsSection(productId: product.id ?? ''),
+                  ),
                 ],
               ),
             ),

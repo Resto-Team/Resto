@@ -49,8 +49,11 @@ class AppRouter {
         // native iOS edge-swipe-to-pop gesture works here.
         return CupertinoPageRoute(
           settings: settings,
-          builder: (_) => BlocProvider.value(
-            value: getIt<CartCubit>(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: getIt<CartCubit>()),
+              BlocProvider.value(value: getIt<SessionCubit>()),
+            ],
             child: ProductDetailsView(product: product),
           ),
         );

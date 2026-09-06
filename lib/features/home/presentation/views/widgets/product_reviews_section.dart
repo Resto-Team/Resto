@@ -4,44 +4,39 @@ import 'package:gap/gap.dart';
 import 'package:resto/core/localization/app_strings.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/widgets/custom_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resto/features/home/presentation/manager/reviews/reviews_cubit.dart';
+import 'package:resto/features/auth/presentation/manager/session/session_cubit.dart';
 
 class Review {
   const Review({
+    required this.id,
     required this.name,
     required this.rating,
     required this.comment,
+    this.isMine = false,
   });
 
+  final String id;
   final String name;
   final int rating;
   final String comment;
+  final bool isMine;
 }
 
-/// UI-only reviews list + "add a review" form. Nothing here is persisted or
-/// sent to the backend — new reviews just get added to local state.
 class ProductReviewsSection extends StatefulWidget {
-  const ProductReviewsSection({super.key});
+  const ProductReviewsSection({super.key, required this.productId});
+
+  final String productId;
 
   @override
   State<ProductReviewsSection> createState() => _ProductReviewsSectionState();
 }
 
 class _ProductReviewsSectionState extends State<ProductReviewsSection> {
-  final List<Review> _reviews = const [
-    Review(
-      name: 'Sara Ahmed',
-      rating: 5,
-      comment: 'Amazing taste, will definitely order again!',
-    ),
-    Review(
-      name: 'Mohamed Ali',
-      rating: 4,
-      comment: 'Good portion size and fresh ingredients.',
-    ),
-  ];
-
   final _commentController = TextEditingController();
   int _newRating = 5;
+  List<Review> _cachedReviews = [];
 
   @override
   void dispose() {
@@ -53,11 +48,13 @@ class _ProductReviewsSectionState extends State<ProductReviewsSection> {
     final comment = _commentController.text.trim();
     if (comment.isEmpty) return;
 
+    context.read<ReviewsCubit>().addReview(
+      widget.productId,
+      _newRating,
+      comment,
+    );
+
     setState(() {
-      _reviews.insert(
-        0,
-        Review(name: 'You', rating: _newRating, comment: comment),
-      );
       _commentController.clear();
       _newRating = 5;
     });
@@ -67,30 +64,71 @@ class _ProductReviewsSectionState extends State<ProductReviewsSection> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final sessionState = context.read<SessionCubit>().state;
+    final currentUserName = sessionState is SessionLoaded ? sessionState.userName : null;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomText(
-          text: context.strings.reviews,
-          size: 16,
-          weight: FontWeight.w600,
-          color: isDark ? AppColors.darkTextPrimary : AppColors.primaryColor,
-        ),
+    return BlocConsumer<ReviewsCubit, ReviewsState>(
+      listener: (context, state) {
+        if (state is ReviewsFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage ?? 'An error occurred'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        bool isLoading = state is ReviewsLoading;
 
-        Gap(12.h),
+        if (state is ReviewsSuccess) {
+          _cachedReviews = state.reviews
+              .map(
+                (r) => Review(
+                  id: r.id,
+                  name: r.user.name,
+                  rating: r.rating,
+                  comment: r.comment,
+                  isMine: currentUserName != null && r.user.name == currentUserName,
+                ),
+              )
+              .toList();
+        }
 
-        _AddReviewCard(
-          rating: _newRating,
-          controller: _commentController,
-          onRatingChanged: (rating) => setState(() => _newRating = rating),
-          onSubmit: _submitReview,
-        ),
+        final allReviews = _cachedReviews;
 
-        Gap(16.h),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              text: context.strings.reviews,
+              size: 16,
+              weight: FontWeight.w600,
+              color: isDark
+                  ? AppColors.darkTextPrimary
+                  : AppColors.primaryColor,
+            ),
 
-        for (final review in _reviews) _ReviewTile(review: review),
-      ],
+            Gap(12.h),
+
+            _AddReviewCard(
+              rating: _newRating,
+              controller: _commentController,
+              onRatingChanged: (rating) => setState(() => _newRating = rating),
+              onSubmit: _submitReview,
+            ),
+
+            Gap(16.h),
+
+            if (isLoading && _cachedReviews.isEmpty)
+              const Center(child: CircularProgressIndicator())
+            else if (_cachedReviews.isEmpty)
+              const Center(child: Text('No reviews yet.'))
+            else
+              for (final review in allReviews) _ReviewTile(review: review, productId: widget.productId),
+          ],
+        );
+      },
     );
   }
 }
@@ -140,8 +178,9 @@ class _AddReviewCard extends StatelessWidget {
             decoration: InputDecoration(
               hintText: context.strings.writeReview,
               hintStyle: TextStyle(
-                color:
-                    isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
+                color: isDark
+                    ? AppColors.darkTextMuted
+                    : AppColors.lightTextMuted,
                 fontSize: 14,
               ),
               filled: true,
@@ -186,9 +225,10 @@ class _AddReviewCard extends StatelessWidget {
 }
 
 class _ReviewTile extends StatelessWidget {
-  const _ReviewTile({required this.review});
+  const _ReviewTile({required this.review, required this.productId});
 
   final Review review;
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +287,13 @@ class _ReviewTile extends StatelessWidget {
               ],
             ),
           ),
+          if (review.isMine)
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 20),
+              onPressed: () {
+                context.read<ReviewsCubit>().deleteReview(productId, review.id);
+              },
+            ),
         ],
       ),
     );

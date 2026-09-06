@@ -12,4 +12,6 @@ class ApiEndpoints {
   static const String removeItemFromCart = 'cart/items';
   static const String clearCart = 'cart';
   static const String createOrder = 'orders';
+  static String reviews(String productId) => 'products/$productId/reviews';
+  static String deleteReview(String productId, String reviewId) => 'products/$productId/reviews/$reviewId';
 }
